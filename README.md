@@ -16,6 +16,17 @@ sudo apt-get install apache2
 sudo apt-get install libapache2-mod-wsgi
 ```
 
+Move to WWW folder:
+```
+cd /var/www
+```
+
+Clone the project:
+```
+git clone https://github.com/partini/procurement-viz.git
+cd procurement-viz
+```
+
 Open the new file in your editor with root privileges:
 ```
 sudo nano app.wsgi
