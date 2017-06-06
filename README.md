@@ -142,6 +142,11 @@ Step 2 — Installing and Verifying MongoDB
 sudo apt-get install -y mongodb-org
 ```
 
+Step 3 - Running MongoDB
+
+```
+sudo service mongod start
+```
 ### 4. Run the importers
 ```
 bash import.sh
