@@ -152,3 +152,17 @@ sudo service mongod start
 bash import.sh
 ```
 
+
+### 5. Getting an error? How do I debug?
+
+First thing you should do is to try having a look at error logs.
+
+The most common error log if you are running this app on a server is to have a look at apache2 error logs.
+
+Issue the following command in terminal to get the error logs:
+
+```
+sudo tail -f /var/log/apache2/error.log
+```
+
+There is also a logs folder in the flask app itself where you can find traces of errors.
