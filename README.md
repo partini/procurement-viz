@@ -37,8 +37,9 @@ Install project dependencies:
 sudo bash install.sh
 ```
 
-Open the new file in your editor with root privileges:
+Make a copy of the wsgi template file and edit it with root privileges:
 ```
+cp app-template.wsgi app.wsgi
 sudo nano app.wsgi
 ```
 
