@@ -16,6 +16,11 @@ sudo apt-get install apache2
 sudo apt-get install libapache2-mod-wsgi
 ```
 
+Installing Python Dev libs:
+```
+sudo apt-get install python-dev
+```
+
 Move to WWW folder:
 ```
 cd /var/www
