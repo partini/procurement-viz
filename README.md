@@ -58,7 +58,7 @@ sudo nano config.cfg
 #### Create New Virtual Host
 Copy default virtual host config file to create new file specific to the project:
 ```
-sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/procurement-viz.org.conf
+sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/procurement-viz.conf
 ```
 
 Open the new file in your editor with root privileges:
