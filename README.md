@@ -166,3 +166,23 @@ sudo tail -f /var/log/apache2/error.log
 ```
 
 There is also a logs folder in the flask app itself where you can find traces of errors.
+
+If the first thing you see is Internal Server Error when you run the app in an ubuntu server, and you are looking at the /var/log/apache2/error.log you will see that the app needs a logs folder which it's not authorized to create.
+
+How to solve this?
+
+Create a logs folder:
+```
+mkdir logs
+```
+
+Change ownership of this folder so apache can write on it:
+```
+chown -R www-data:www-data /var/www/procurement-viz/logs
+```
+
+Restart apache2
+```
+sudo service apache2 restart
+```
+```
