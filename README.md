@@ -27,6 +27,11 @@ git clone https://github.com/partini/procurement-viz.git
 cd procurement-viz
 ```
 
+Install project dependencies:
+```
+sudo bash install.sh
+```
+
 Open the new file in your editor with root privileges:
 ```
 sudo nano app.wsgi
