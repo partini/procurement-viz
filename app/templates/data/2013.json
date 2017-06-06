@@ -1,0 +1,54 @@
+var te_dhenat = {
+  bounds: {
+    vlera: {
+      max: 5501552.22,
+      min: 5000
+    },
+    cmimi: {
+      max: 7775486.63,
+      min: 4800
+    },
+    numriKontratave: {
+      max: 179,
+      min: 1
+    }
+  },
+  result: [
+    {
+      numriKontratave: 179,
+      selia: "belgrade",
+      cmimi: 7775486.63,
+      emri: "Belgrade",
+      vlera: 5501552.22,
+      gjeresia: 44.8178787,
+      gjatesia: 20.4568089,
+    },
+    {
+      numriKontratave: 1,
+      selia: "cacak",
+      cmimi: 206150.65,
+      emri: "Cacak",
+      gjeresia: 43.8888275,
+      vlera: 100000,
+      gjatesia: 20.3447317
+    },
+    {
+      numriKontratave: 5,
+      selia: "Novi Sad",
+      cmimi: 66227.8,
+      emri: "Novi Sad",
+      gjeresia: 45.2551053,
+      vlera: 69000,
+      gjatesia: 19.845081
+    },
+    {
+      numriKontratave: 7,
+      selia: "subotica",
+      cmimi: 130724.54000000001,
+      emri: "Subotica",
+      gjeresia: 46.1000129,
+      vlera: 159514.25,
+      gjatesia: 19.6640974
+    }
+  ]
+}

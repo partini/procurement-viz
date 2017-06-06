@@ -1,0 +1,1450 @@
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Procurement visualizer</title>
+
+
+    <!-- Custom Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet'
+          type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+          rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/clean.min.css')}}"/>
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+
+
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+    <!--<script src="/data/2013.json"></script>-->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript">
+       var coordinates_array = [];
+        $(document).ready(function() {
+            var coordinates = {
+                "PRISTINA": {
+                    "lat": 42.6629138,
+                    "lng": 21.1655028
+                },
+                "OPOVO": {
+                    "lat": 45.0577317,
+                    "lng": 20.5079448
+                },
+                "LAJKOVAC": {
+                    "lat": 44.3669363,
+                    "lng": 20.1616645
+                },
+                "LAPOVO": {
+                    "lat": 44.1837957,
+                    "lng": 21.0719824
+                },
+                "GJILAN": {
+                    "lat": 42.4635206,
+                    "lng": 21.4694011
+                },
+                "PANTELEJ": {
+                    "lat": 43.3528293,
+                    "lng": 21.9433216
+                },
+                "ARILJE": {
+                    "lat": 43.7518301,
+                    "lng": 20.0973982
+                },
+                "PANTELEJ": {
+                    "lat": 43.3528293,
+                    "lng": 21.9433216
+                },
+                "PRIJEPOLJE": {
+                    "lat": 43.3893574,
+                    "lng": 19.6463666
+                },
+                "ARILJE": {
+                    "lat": 43.7518301,
+                    "lng": 20.0973982
+                },
+                "BARAJEVO": {
+                    "lat": 44.6034915,
+                    "lng": 20.45241
+                },
+                "PRIJEPOLJE": {
+                    "lat": 43.3893574,
+                    "lng": 19.6463666
+                },
+                "BARAJEVO": {
+                    "lat": 44.6034915,
+                    "lng": 20.45241
+                },
+                "PRIBOJ": {
+                    "lat": 43.5827565,
+                    "lng": 19.5266606
+                },
+                "MEDVEĐA": {
+                    "lat": 42.8414484,
+                    "lng": 21.5766407
+                },
+                "LEPOSAVIĆ": {
+                    "lat": 43.1015959,
+                    "lng": 20.8011155
+                },
+                "PLANDIŠTE": {
+                    "lat": 45.2371412,
+                    "lng": 21.1048552
+                },
+                "KOSJERIĆ": {
+                    "lat": 44.003315,
+                    "lng": 19.9101866
+                },
+                "PLANDIŠTE": {
+                    "lat": 45.2371412,
+                    "lng": 21.1048552
+                },
+                "KOSJERIĆ": {
+                    "lat": 44.003315,
+                    "lng": 19.9101866
+                },
+                "BAČ": {
+                    "lat": 45.3493053,
+                    "lng": 19.2171283
+                },
+                "BOLJEVAC": {
+                    "lat": 43.8371234,
+                    "lng": 21.9598032
+                },
+                "Niska Banja": {
+                    "lat": 43.2981839,
+                    "lng": 22.0044228
+                },
+                "OSEČINA": {
+                    "lat": 44.3732906,
+                    "lng": 19.5977981
+                },
+                "ĆIĆEVAC": {
+                    "lat": 43.7212584,
+                    "lng": 21.4436651
+                },
+                "Backa Topola": {
+                    "lat": 45.81442380000001,
+                    "lng": 19.6379551
+                },
+                "TUTIN": {
+                    "lat": 42.98998719999999,
+                    "lng": 20.3335616
+                },
+                "Backa Topola": {
+                    "lat": 45.81442380000001,
+                    "lng": 19.6379551
+                },
+                "TUTIN": {
+                    "lat": 42.98998719999999,
+                    "lng": 20.3335616
+                },
+                "LEBANE": {
+                    "lat": 42.9203458,
+                    "lng": 21.7421911
+                },
+                "BEOČIN": {
+                    "lat": 45.1967717,
+                    "lng": 19.7221144
+                },
+                "Backi Petrovac": {
+                    "lat": 45.3567755,
+                    "lng": 19.6173117
+                },
+                "Sremski Karlovci": {
+                    "lat": 45.1810363,
+                    "lng": 19.9442694
+                },
+                "Kikinda": {
+                    "lat": 45.8272842,
+                    "lng": 20.4615173
+                },
+                "ROYAL": {
+                    "lat": 44.8211772,
+                    "lng": 20.4571532
+                },
+                "Kikinda": {
+                    "lat": 45.8272842,
+                    "lng": 20.4615173
+                },
+                "ROYAL": {
+                    "lat": 44.8211772,
+                    "lng": 20.4571532
+                },
+                "RUMA": {
+                    "lat": 45.0075322,
+                    "lng": 19.8227166
+                },
+                "VLADIMIRCI": {
+                    "lat": 44.6179267,
+                    "lng": 19.7693864
+                },
+                "WHITE CHURCH": {
+                    "lat": 44.0676378,
+                    "lng": 21.4940536
+                },
+                "BABUŠNICA": {
+                    "lat": 43.06383470000001,
+                    "lng": 22.4061647
+                },
+                "KOCELJEVA": {
+                    "lat": 44.46933079999999,
+                    "lng": 19.8223207
+                },
+                "BOGATIĆ": {
+                    "lat": 44.8560904,
+                    "lng": 19.4864524
+                },
+                "Brus": {
+                    "lat": 43.3839858,
+                    "lng": 21.0315005
+                },
+                "BATOČINA": {
+                    "lat": 44.1481375,
+                    "lng": 21.0586018
+                },
+                "SRBOBRAN": {
+                    "lat": 45.5484307,
+                    "lng": 19.7927114
+                },
+                "INĐIJA": {
+                    "lat": 45.0485391,
+                    "lng": 20.0808092
+                },
+                "Bela Palanka": {
+                    "lat": 43.2158639,
+                    "lng": 22.3169034
+                },
+                "REKOVAC": {
+                    "lat": 43.8699654,
+                    "lng": 21.0688871
+                },
+                "SID": {
+                    "lat": 45.1257987,
+                    "lng": 19.2282876
+                },
+                "Mali Zvornik": {
+                    "lat": 44.3789189,
+                    "lng": 19.1176707
+                },
+                "BEČEJ": {
+                    "lat": 45.6138162,
+                    "lng": 20.0459853
+                },
+                "GADŽIN HAN": {
+                    "lat": 43.2270564,
+                    "lng": 22.0309456
+                },
+                "ZVEČAN": {
+                    "lat": 42.91076349999999,
+                    "lng": 20.8386377
+                },
+                "Rakovica": {
+                    "lat": 44.7189343,
+                    "lng": 20.4538059
+                },
+                "MIONICA": {
+                    "lat": 44.2505709,
+                    "lng": 20.079853
+                },
+                "Mali Iđoš": {
+                    "lat": 45.7120639,
+                    "lng": 19.6574694
+                },
+                "MIONICA": {
+                    "lat": 44.2505709,
+                    "lng": 20.079853
+                },
+                "Mali Iđoš": {
+                    "lat": 45.7120639,
+                    "lng": 19.6574694
+                },
+                "VOŽDOVAC": {
+                    "lat": 44.6711569,
+                    "lng": 20.5029521
+                },
+                "RAŽANJ": {
+                    "lat": 43.6703445,
+                    "lng": 21.5580035
+                },
+                "NEGOTIN": {
+                    "lat": 44.2288747,
+                    "lng": 22.5310674
+                },
+                "Vrsac": {
+                    "lat": 45.1181926,
+                    "lng": 21.2944883
+                },
+                "DESPOTOVAC": {
+                    "lat": 44.0970463,
+                    "lng": 21.4322091
+                },
+                "EAST": {
+                    "lat": 44.016521,
+                    "lng": 21.005859
+                },
+                "TRGOVIŠTE": {
+                    "lat": 42.3606523,
+                    "lng": 22.0655219
+                },
+                "ALIBUNAR": {
+                    "lat": 45.0778157,
+                    "lng": 20.9678451
+                },
+                "ŽABALJ": {
+                    "lat": 45.3941062,
+                    "lng": 20.1138635
+                },
+                "Veliko Gradiste": {
+                    "lat": 44.7495362,
+                    "lng": 21.505809
+                },
+                "ŽABALJ": {
+                    "lat": 45.3941062,
+                    "lng": 20.1138635
+                },
+                "Veliko Gradiste": {
+                    "lat": 44.7495362,
+                    "lng": 21.505809
+                },
+                "KANJIŽA": {
+                    "lat": 46.061602,
+                    "lng": 20.0469576
+                },
+                "ČOKA": {
+                    "lat": 45.9469236,
+                    "lng": 20.1591006
+                },
+                "ODŽACI": {
+                    "lat": 45.5146587,
+                    "lng": 19.2762516
+                },
+                "SURČIN": {
+                    "lat": 44.7541378,
+                    "lng": 20.2116933
+                },
+                "RAŠKA": {
+                    "lat": 43.2896004,
+                    "lng": 20.6160755
+                },
+                "ALEKSANDROVAC": {
+                    "lat": 43.4604716,
+                    "lng": 21.0489533
+                },
+                "GROCKA": {
+                    "lat": 44.6676303,
+                    "lng": 20.7269446
+                },
+                "ŠTRPCE": {
+                    "lat": 42.2406238,
+                    "lng": 21.0259079
+                },
+                "LJUBOVIJA": {
+                    "lat": 44.1884454,
+                    "lng": 19.3776743
+                },
+                "SAVSKI VENAC": {
+                    "lat": 44.7821727,
+                    "lng": 20.4514424
+                },
+                "VLASOTINCE": {
+                    "lat": 42.9661191,
+                    "lng": 22.1308942
+                },
+                "APATIN": {
+                    "lat": 45.6728599,
+                    "lng": 18.984314
+                },
+                "VLASOTINCE": {
+                    "lat": 42.9661191,
+                    "lng": 22.1308942
+                },
+                "APATIN": {
+                    "lat": 45.6728599,
+                    "lng": 18.984314
+                },
+                "POŽEGA": {
+                    "lat": 43.8451119,
+                    "lng": 20.0388044
+                },
+                "PALILULA": {
+                    "lat": 44.9398868,
+                    "lng": 20.4626509
+                },
+                "POŽEGA": {
+                    "lat": 43.8451119,
+                    "lng": 20.0388044
+                },
+                "PALILULA": {
+                    "lat": 44.9398868,
+                    "lng": 20.4626509
+                },
+                "PETROVAC": {
+                    "lat": 44.3609608,
+                    "lng": 21.3940739
+                },
+                "ČUKARICA": {
+                    "lat": 44.68348839999999,
+                    "lng": 20.3850355
+                },
+                "TRSTENIK": {
+                    "lat": 43.6173787,
+                    "lng": 21.0023004
+                },
+                "Sabac": {
+                    "lat": 44.7488612,
+                    "lng": 19.6907882
+                },
+                "TRSTENIK": {
+                    "lat": 43.6173787,
+                    "lng": 21.0023004
+                },
+                "Sabac": {
+                    "lat": 44.7488612,
+                    "lng": 19.6907882
+                },
+                "Prokuplje": {
+                    "lat": 43.2367913,
+                    "lng": 21.5915831
+                },
+                "Zajecar": {
+                    "lat": 43.9015048,
+                    "lng": 22.2738011
+                },
+                "Surdulica": {
+                    "lat": 42.69072329999999,
+                    "lng": 22.1720303
+                },
+                "NEW KNEŽEVAC": {
+                    "lat": 44.7999776,
+                    "lng": 20.4341188
+                },
+                "KUČEVO": {
+                    "lat": 44.4846365,
+                    "lng": 21.6706559
+                },
+                "Presevo": {
+                    "lat": 42.3091712,
+                    "lng": 21.6498686
+                },
+                "KUČEVO": {
+                    "lat": 44.4846365,
+                    "lng": 21.6706559
+                },
+                "Presevo": {
+                    "lat": 42.3091712,
+                    "lng": 21.6498686
+                },
+                "RACA": {
+                    "lat": 44.2327226,
+                    "lng": 20.9791383
+                },
+                "ŽITORAĐA": {
+                    "lat": 43.1807232,
+                    "lng": 21.7004251
+                },
+                "RACA": {
+                    "lat": 44.2327226,
+                    "lng": 20.9791383
+                },
+                "ŽITORAĐA": {
+                    "lat": 43.1807232,
+                    "lng": 21.7004251
+                },
+                "KURŠUMLIJA": {
+                    "lat": 43.1405124,
+                    "lng": 21.2734409
+                },
+                "Backa Palanka": {
+                    "lat": 45.2497275,
+                    "lng": 19.3967698
+                },
+                "Orahovac": {
+                    "lat": 42.3998287,
+                    "lng": 20.6527992
+                },
+                "POŽAREVAC": {
+                    "lat": 44.6208353,
+                    "lng": 21.1842054
+                },
+                "Paracin": {
+                    "lat": 43.858616,
+                    "lng": 21.403911
+                },
+                "KURŠUMLIJA": {
+                    "lat": 43.1405124,
+                    "lng": 21.2734409
+                },
+                "Backa Palanka": {
+                    "lat": 45.2497275,
+                    "lng": 19.3967698
+                },
+                "Orahovac": {
+                    "lat": 42.3998287,
+                    "lng": 20.6527992
+                },
+                "POŽAREVAC": {
+                    "lat": 44.6208353,
+                    "lng": 21.1842054
+                },
+                "Paracin": {
+                    "lat": 43.858616,
+                    "lng": 21.403911
+                },
+                "VRAČAR": {
+                    "lat": 44.7995311,
+                    "lng": 20.475025
+                },
+                "KOVAČICA": {
+                    "lat": 45.1071651,
+                    "lng": 20.6595514
+                },
+                "BOR": {
+                    "lat": 44.0698918,
+                    "lng": 22.0985086
+                },
+                "Loznica": {
+                    "lat": 44.5313463,
+                    "lng": 19.2067663
+                },
+                "Gornji Milanovac": {
+                    "lat": 44.0207262,
+                    "lng": 20.4633133
+                },
+                "NEW BELGRADE": {
+                    "lat": 44.8099561,
+                    "lng": 20.3800881
+                },
+                "VARVARIN": {
+                    "lat": 43.7217636,
+                    "lng": 21.3563894
+                },
+                "Senta": {
+                    "lat": 45.9260128,
+                    "lng": 20.0780937
+                },
+                "STARI GRAD": {
+                    "lat": 44.8184554,
+                    "lng": 20.4643411
+                },
+                "VRAČAR": {
+                    "lat": 44.7995311,
+                    "lng": 20.475025
+                },
+                "RED CROSS": {
+                    "lat": 44.8190089,
+                    "lng": 20.4609859
+                },
+                "Obrenovac": {
+                    "lat": 44.596795,
+                    "lng": 20.1242053
+                },
+                "IRIG": {
+                    "lat": 45.1011851,
+                    "lng": 19.8616812
+                },
+                "Pancevo": {
+                    "lat": 44.874,
+                    "lng": 20.6475673
+                },
+                "KOVAČICA": {
+                    "lat": 45.1071651,
+                    "lng": 20.6595514
+                },
+                "KRUPANJ": {
+                    "lat": 44.3623348,
+                    "lng": 19.3629829
+                },
+                "BOR": {
+                    "lat": 44.0698918,
+                    "lng": 22.0985086
+                },
+                "Loznica": {
+                    "lat": 44.5313463,
+                    "lng": 19.2067663
+                },
+                "Gornji Milanovac": {
+                    "lat": 44.0207262,
+                    "lng": 20.4633133
+                },
+                "NEW BELGRADE": {
+                    "lat": 44.8099561,
+                    "lng": 20.3800881
+                },
+                "VARVARIN": {
+                    "lat": 43.7217636,
+                    "lng": 21.3563894
+                },
+                "Senta": {
+                    "lat": 45.9260128,
+                    "lng": 20.0780937
+                },
+                "STARI GRAD": {
+                    "lat": 44.8184554,
+                    "lng": 20.4643411
+                },
+                "RED CROSS": {
+                    "lat": 44.8190089,
+                    "lng": 20.4609859
+                },
+                "Obrenovac": {
+                    "lat": 44.596795,
+                    "lng": 20.1242053
+                },
+                "ČAČAK": {
+                    "lat": 43.8914144,
+                    "lng": 20.3501652
+                },
+                "LAZAREVAC": {
+                    "lat": 44.3794871,
+                    "lng": 20.2638941
+                },
+                "ČAJETINA": {
+                    "lat": 43.7504777,
+                    "lng": 19.7142007
+                },
+                "PIROT": {
+                    "lat": 43.1557012,
+                    "lng": 22.5856812
+                },
+                "ŽAGUBICA": {
+                    "lat": 44.1674075,
+                    "lng": 21.8619211
+                },
+                "ARANĐELOVAC": {
+                    "lat": 44.3037425,
+                    "lng": 20.5613514
+                },
+                "SOPOT": {
+                    "lat": 44.525085,
+                    "lng": 20.5629346
+                },
+                "Smederevska Palanka": {
+                    "lat": 44.367191,
+                    "lng": 20.9604515
+                },
+                "KRAGUJEVAC - GRAD": {
+                    "lat": 44.0127932,
+                    "lng": 20.9114225
+                },
+                "Smederevo": {
+                    "lat": 44.6658941,
+                    "lng": 20.9335169
+                },
+                "TEMERIN": {
+                    "lat": 45.415745,
+                    "lng": 19.8931066
+                },
+                "PEĆINCI": {
+                    "lat": 44.9047024,
+                    "lng": 19.9696683
+                },
+                "IRIG": {
+                    "lat": 45.1011851,
+                    "lng": 19.8616812
+                },
+                "KOSOVSKA MITROVICA": {
+                    "lat": 42.8913909,
+                    "lng": 20.8659995
+                },
+                "Pancevo": {
+                    "lat": 44.874,
+                    "lng": 20.6475673
+                },
+                "Novi Pazar": {
+                    "lat": 43.1406976,
+                    "lng": 20.5213617
+                },
+                "MAJDANPEK": {
+                    "lat": 44.4191965,
+                    "lng": 21.9495234
+                },
+                "Sombor": {
+                    "lat": 45.773295,
+                    "lng": 19.1151468
+                },
+                "LJIG": {
+                    "lat": 44.22670069999999,
+                    "lng": 20.2359415
+                },
+                "ZVEZDARA": {
+                    "lat": 44.77671369999999,
+                    "lng": 20.5324028
+                },
+                "Zemun": {
+                    "lat": 44.8532094,
+                    "lng": 20.3555646
+                },
+                "KNJAŽEVAC": {
+                    "lat": 43.5660829,
+                    "lng": 22.2466754
+                },
+                "KRUPANJ": {
+                    "lat": 44.3623348,
+                    "lng": 19.3629829
+                },
+                "BOSILEGRAD": {
+                    "lat": 42.5085195,
+                    "lng": 22.4649083
+                },
+                "Nova Varos": {
+                    "lat": 43.4676913,
+                    "lng": 19.8125507
+                },
+                "MLADENOVAC": {
+                    "lat": 44.4364358,
+                    "lng": 20.6938524
+                },
+                "ŽABARI": {
+                    "lat": 44.364267,
+                    "lng": 21.2045007
+                },
+                "Vranje": {
+                    "lat": 42.5450345,
+                    "lng": 21.9002712
+                },
+                "MEROŠINA": {
+                    "lat": 43.2738304,
+                    "lng": 21.715491
+                },
+                "IVANJICA": {
+                    "lat": 43.5693547,
+                    "lng": 20.2430953
+                },
+                "Vrnjacka Banja": {
+                    "lat": 43.6250736,
+                    "lng": 20.8941879
+                },
+                "Blace": {
+                    "lat": 43.2981999,
+                    "lng": 21.2934256
+                },
+                "Velika Plana": {
+                    "lat": 44.3308145,
+                    "lng": 21.0708694
+                },
+                "KNIĆ": {
+                    "lat": 43.9267483,
+                    "lng": 20.7214259
+                },
+                "Stara Pazova": {
+                    "lat": 44.985613,
+                    "lng": 20.1568773
+                },
+                "Krusevac": {
+                    "lat": 43.5757545,
+                    "lng": 21.3310509
+                },
+                "Vladicin Han": {
+                    "lat": 42.70953249999999,
+                    "lng": 22.0625411
+                },
+                "Bujanovac": {
+                    "lat": 42.4609263,
+                    "lng": 21.7662019
+                },
+                "MEDIANA": {
+                    "lat": 43.3097518,
+                    "lng": 21.9484501
+                },
+                "Sremska Mitrovica": {
+                    "lat": 44.9794968,
+                    "lng": 19.6209662
+                },
+                "DOLJEVAC": {
+                    "lat": 43.1912783,
+                    "lng": 21.8238022
+                },
+                "ČAČAK": {
+                    "lat": 43.8914144,
+                    "lng": 20.3501652
+                },
+                "LAZAREVAC": {
+                    "lat": 44.3794871,
+                    "lng": 20.2638941
+                },
+                "ČAJETINA": {
+                    "lat": 43.7504777,
+                    "lng": 19.7142007
+                },
+                "PIROT": {
+                    "lat": 43.1557012,
+                    "lng": 22.5856812
+                },
+                "ŽAGUBICA": {
+                    "lat": 44.1674075,
+                    "lng": 21.8619211
+                },
+                "ARANĐELOVAC": {
+                    "lat": 44.3037425,
+                    "lng": 20.5613514
+                },
+                "SOPOT": {
+                    "lat": 44.525085,
+                    "lng": 20.5629346
+                },
+                "Smederevska Palanka": {
+                    "lat": 44.367191,
+                    "lng": 20.9604515
+                },
+                "KRAGUJEVAC - GRAD": {
+                    "lat": 44.0127932,
+                    "lng": 20.9114225
+                },
+                "Smederevo": {
+                    "lat": 44.6658941,
+                    "lng": 20.9335169
+                },
+                "TEMERIN": {
+                    "lat": 45.415745,
+                    "lng": 19.8931066
+                },
+                "PEĆINCI": {
+                    "lat": 44.9047024,
+                    "lng": 19.9696683
+                },
+                "KOSOVSKA MITROVICA": {
+                    "lat": 42.8913909,
+                    "lng": 20.8659995
+                },
+                "Novi Pazar": {
+                    "lat": 43.1406976,
+                    "lng": 20.5213617
+                },
+                "MAJDANPEK": {
+                    "lat": 44.4191965,
+                    "lng": 21.9495234
+                },
+                "Sombor": {
+                    "lat": 45.773295,
+                    "lng": 19.1151468
+                },
+                "LJIG": {
+                    "lat": 44.22670069999999,
+                    "lng": 20.2359415
+                },
+                "ZVEZDARA": {
+                    "lat": 44.77671369999999,
+                    "lng": 20.5324028
+                },
+                "Zemun": {
+                    "lat": 44.8532094,
+                    "lng": 20.3555646
+                },
+                "KNJAŽEVAC": {
+                    "lat": 43.5660829,
+                    "lng": 22.2466754
+                },
+                "BOSILEGRAD": {
+                    "lat": 42.5085195,
+                    "lng": 22.4649083
+                },
+                "Nova Varos": {
+                    "lat": 43.4676913,
+                    "lng": 19.8125507
+                },
+                "MLADENOVAC": {
+                    "lat": 44.4364358,
+                    "lng": 20.6938524
+                },
+                "ŽABARI": {
+                    "lat": 44.364267,
+                    "lng": 21.2045007
+                },
+                "Vranje": {
+                    "lat": 42.5450345,
+                    "lng": 21.9002712
+                },
+                "MEROŠINA": {
+                    "lat": 43.2738304,
+                    "lng": 21.715491
+                },
+                "IVANJICA": {
+                    "lat": 43.5693547,
+                    "lng": 20.2430953
+                },
+                "Vrnjacka Banja": {
+                    "lat": 43.6250736,
+                    "lng": 20.8941879
+                },
+                "Blace": {
+                    "lat": 43.2981999,
+                    "lng": 21.2934256
+                },
+                "Velika Plana": {
+                    "lat": 44.3308145,
+                    "lng": 21.0708694
+                },
+                "KNIĆ": {
+                    "lat": 43.9267483,
+                    "lng": 20.7214259
+                },
+                "Stara Pazova": {
+                    "lat": 44.985613,
+                    "lng": 20.1568773
+                },
+                "Krusevac": {
+                    "lat": 43.5757545,
+                    "lng": 21.3310509
+                },
+                "Vladicin Han": {
+                    "lat": 42.70953249999999,
+                    "lng": 22.0625411
+                },
+                "Bujanovac": {
+                    "lat": 42.4609263,
+                    "lng": 21.7662019
+                },
+                "MEDIANA": {
+                    "lat": 43.3097518,
+                    "lng": 21.9484501
+                },
+                "Sremska Mitrovica": {
+                    "lat": 44.9794968,
+                    "lng": 19.6209662
+                },
+                "DOLJEVAC": {
+                    "lat": 43.1912783,
+                    "lng": 21.8238022
+                },
+                "Valjevo": {
+                    "lat": 44.2682727,
+                    "lng": 19.8906547
+                },
+                "Vrbas": {
+                    "lat": 45.5701534,
+                    "lng": 19.6449683
+                },
+                "Uzice": {
+                    "lat": 43.8554024,
+                    "lng": 19.8420937
+                },
+                "Zrenjanin": {
+                    "lat": 45.3815612,
+                    "lng": 20.3685738
+                },
+                "ADA": {
+                    "lat": 45.8155335,
+                    "lng": 20.1206515
+                },
+                "ŽITIŠTE": {
+                    "lat": 45.4821275,
+                    "lng": 20.5384356
+                },
+                "METALS": {
+                    "lat": 44.8121901,
+                    "lng": 20.3980675
+                },
+                "GOLUBAC": {
+                    "lat": 44.6380305,
+                    "lng": 21.6773447
+                },
+                "SJENICA": {
+                    "lat": 43.2741145,
+                    "lng": 20.0032054
+                },
+                "Leskovac": {
+                    "lat": 42.9963758,
+                    "lng": 21.944034
+                },
+            }
+
+            function get_coordinates(name) {
+                if (coordinates[name] != null) {
+                    return coordinates[name];
+                }
+
+
+                <!--$.ajax({-->
+                <!--type: "GET",-->
+                <!--url: 'http://maps.google.com/maps/api/geocode/json?address='+name+',+Serbia&sensor=false',-->
+                <!--success: function (rooms) {-->
+                <!--if(rooms['results'][0] != undefined){-->
+                <!--console.log('"'+name+'":'+JSON.stringify(rooms['results'][0].geometry.location)+',');-->
+                <!--}-->
+
+                <!--&lt;!&ndash;coordinates.push({name:rooms['results'][0].geometry.location});&ndash;&gt;-->
+                <!--}-->
+                <!--});-->
+                <!--&lt;!&ndash;return coordinates[name];&ndash;&gt;-->
+                return 0;
+            }
+            var te_dhenat = {
+                bounds: {
+                    vlera: {
+                        max: 500,
+                        min: 1
+                    },
+                    cmimi: {
+                        max: 500,
+                        min: 1
+                    },
+                    numberOfContracts: {
+                        max: 500,
+                        min: 1
+                    }
+                },
+                result: [{% for muni in municipality_result -%}
+                {
+                        numberOfContracts: {{ muni['numberOfContracts'] }},
+                        selia: "{{ muni['selia'] }}",
+                        price: {{ muni['price'] }},
+                        name: "{{ muni['name'] }}",
+                        value: {{ muni['numberOfContracts'] }},
+                        gjeresia: get_coordinates("{{ muni['selia'] }}")['lat'],
+                        gjatesia: get_coordinates("{{ muni['selia'] }}")['lng'],
+                    },
+
+                    {% endfor %}
+                ]
+            }
+            var gradOfColor = Array();
+            gradOfColor[0] = '#e9fca9';
+            gradOfColor[1] = '#FED976';
+            gradOfColor[2] = '#FEB24C';
+            gradOfColor[3] = '#FD8D3C';
+            gradOfColor[4] = '#FC4E2A';
+            gradOfColor[5] = '#E31A1C';
+            gradOfColor[6] = '#B10026';
+            var markerLayerGroup = undefined;
+            var markerArray = [];
+            var valueArray = [];
+
+            $(document).ready(function() {
+                var municipality = 'Belgrade';
+                $('#year-select').change(function() {
+                    initMap();
+                })
+                $('#type-select').change(function() {
+                    initMap();
+                })
+                var map = L.map('map').setView([44.245, 19.539], 7);
+                L.tileLayer('http://{s}.tiles.mapbox.com/v3/georges.jjc3k7b1/{z}/{x}/{y}.png', {
+                    attribution: '',
+                    maxZoom: 18
+                }).addTo(map);
+                initMap();
+
+                function initMap() {
+                    // Init map with markers for default year, months and measurement selection.
+                    var year = $('#year-select').val();
+                    var type = $('#type-select').val();
+                    addMarkers(municipality, year, type);
+                }
+
+                function addMarkers(municipality, year, type) {
+                    $('.leaflet-control').css('display', 'block');
+                    markerArray = [];
+                    if (markerLayerGroup != undefined) {
+                        map.removeLayer(markerLayerGroup);
+                    }
+                    var type = $('#type-select').val();
+                    var type_text = $("#type-select option[value='" + type + "']").text();
+                    var year = $('#viti-select').val();
+                    var jsonResult = te_dhenat;
+                    var popup = L.popup();
+                    // Get max and min value of select parameter.
+                    // We need this to calculate colorpleth buckets
+                    var min = jsonResult['bounds'][type]['min'];
+                    var max = jsonResult['bounds'][type]['max'];
+
+                    // Build gradient legend bucket array.
+                    var gradientUnit = (max - min) / 7;
+                    var gradiantBounds = new Array();
+                    // Define first boun
+                    gradiantBounds[0] = Math.ceil(min);
+                    // Define the rest of the bounds, based on the first bound
+                    for (var x = 1; x < 7; x++) {
+                        gradiantBounds[x] = Math.floor(gradiantBounds[x - 1] + gradientUnit);
+                    }
+                    // Build colorpleth legend
+                    if (type != 'numberOfContracts') {
+                        max = toCurrency(max, true);
+                        min = toCurrency(min, true);
+                        $('#min-value').text(min);
+                        $('#max-value').text(max);
+                    } else {
+                        $('#min-value').text(min);
+                        $('#max-value').text(max);
+                    }
+                    for (var key in jsonResult['result']) {
+                        var value = jsonResult['result'][key][type];
+                        var selia = jsonResult['result'][key].selia;
+                        var emri = jsonResult['result'][key].name;
+                        var color = '';
+                        for (var c = 6; c >= 0; c--) {
+                            if (Math.ceil(value) >= gradiantBounds[c]) {
+                                color = gradOfColor[c];
+                                break;
+                            }
+                        }
+
+                        var lon = jsonResult['result'][key].gjatesia;
+                        var lat = jsonResult['result'][key].gjeresia;
+                        if (lat != null) {
+                            if (type != 'numberOfContracts') {
+                                displayValue = toCurrency(value, true);
+                            } else {
+                                displayValue = value;
+                            }
+                            values[selia] = displayValue;
+                            if (name != undefined) {
+                                var popupContent = "<strong>" + emri + '</strong><br>' + selected_type[type] + ": <b>" + displayValue + "</b><br>";
+                            }
+                            var circle = L.circle([lat, lon], 3000, {
+                                color: color,
+                                fillColor: color,
+                                fillOpacity: 0.9
+                            });
+                        }
+                        if (popupContent != undefined) {
+                            circle.bindPopup(popupContent);
+                            markerArray.push(circle);
+                        }
+                    }
+                    $('#map').on('click', '.trigger', function() {
+                        var selia = $(this).attr('id');
+                        console.log(selia);
+                        var year_get = $('#viti-select').val();
+                        var url_get = "{{ config.BASE_PATH }}/json/{{municipality}}/red-flags/" + selia + "/" + year_get + "";
+                        $("#dialog-table").dialog({
+                            draggable: false,
+                            autoOpen: false,
+                            resizable: false,
+                            hide: "slide",
+                            show: "slide",
+                            position: {
+                                my: "top",
+                                at: "top+170",
+                                of: window
+                            },
+                            closeOnEscape: true,
+                            width: "95%"
+                        });
+                        $.get(url_get, function() {}).done(function(results) {
+                            buildTable(results, year_get);
+                            $('#dialog-table').dialog('option', 'title', results[0].selia + ", " + selected_type[type] + ": " + values[selia])
+                            $('#results_' + year_get).dataTable({
+                                "paging": true,
+                                "pagingType": "full_numbers"
+                            });
+                            $('.leaflet-control').css('display', 'none');
+                            $("#dialog-table").dialog('open');
+                        });
+                    });
+                    markerLayerGroup = L.layerGroup(markerArray);
+                    map.addLayer(markerLayerGroup);
+
+                }
+            })
+            var selected_type = {
+                "cmimi": "Amount of contracts",
+                "numberOfContracts": "Number of contracts"
+            }
+
+            function toCurrency(amount, euroPrefix) {
+                var amount = parseFloat(Math.round(amount * 100) / 100).toFixed(0);
+                var currencyAmount = (amount + "").replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+                if (euroPrefix) {
+                    return currencyAmount;
+                } else {
+                    return currencyAmount;
+                }
+            }
+            var values = {};
+
+
+
+
+            // Build the chart
+            Highcharts.chart('chart-container', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Aggregation by type of procedure'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: false
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: 'Types',
+                    colorByPoint: true,
+                    data: [{% for item in procedure_types -%}
+                        {
+                            name: "{{ item['_id']['name'] }}",
+                            y: {{ item['y'] }}
+                        },
+                        {% endfor %}
+                    ]
+                }]
+            });
+
+            // Build the chart
+            Highcharts.chart('activities-chart-container', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Aggregation by contractor activity'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: false
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: 'Percentage of number of contracts: ',
+                    colorByPoint: true,
+                    data: [{% for item in activities -%}
+                        {
+                            name: "{{ item['_id']['name'] }}",
+                            y: {{    item['y'] }}
+                        },
+                        {% endfor %}
+                    ]
+                }]
+            });
+
+            // Build the chart
+            Highcharts.chart('categories-chart-container', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Aggregation by category/sector'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: false
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: 'Percentage of number of contracts: ',
+                    colorByPoint: true,
+                    data: [{% for item in categories -%}
+                     {
+                            name: "{{ item['_id']['name'] }}",
+                            y: {{ item['y'] }}
+                        },
+                        {% endfor %}
+                    ]
+                }]
+            });
+
+            Highcharts.chart('line-chart-container', {
+
+                title: {
+                    text: 'Aggregation of tender categories by month'
+                },
+
+                subtitle: {
+                    text: ''
+                },
+
+                yAxis: {
+                    title: {
+                        text: 'Number of contracts'
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle'
+                },
+
+                plotOptions: {
+                    series: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                },
+
+                series: [{% for d in categories_by_date %}
+                    {
+                        name: "{{ d['name'] }}",
+                        data: {{ d['data']}}
+                    },
+                    {% endfor %}
+                ]
+
+            });
+        });
+
+
+
+
+
+    </script>
+    <style>
+            #map {
+                height: 600px;
+                width: 100%;
+            }
+
+
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                Menu <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand" href="index.html">Procurement Visualizer</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="index.html"></a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+<!-- Page Header -->
+<!-- Set your background image for this header on the line below. -->
+<header class="intro-header" style='background-image: url("{{ url_for('static' ,filename='img/home-bg.jpg')}}")'>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="site-heading">
+                <h1>Visualizing Procurement Data of Serbia</h1>
+                <hr class="small">
+                <span class="subheading">A prototype on procurement visualizations</span>
+            </div>
+        </div>
+    </div>
+</div>
+</header>
+<div id="container" align="center" style="padding-left:1%;padding-right:1%;">
+    <div id="select" style="display: block; margin-left: 150px;">
+        <form class="form-inline">
+            <div class="form-group">
+                <label>Year: </label>
+            </div>
+            <div class="form-group">
+                <select id="viti-select" class="form-control">
+                    <option disabled value="2010">2010</option>
+                    <option disabled value="2011">2011</option>
+                    <option disabled value="2012">2012</option>
+                    <option disabled value="2013">2013</option>
+                    <option disabled value="2014">2014</option>
+                    <option disabled value="2014">2015</option>
+                    <option disabled value="2014" selected="selected">2016</option>
+                </select>
+            </div>
+            <div class="form-group" style="margin-left:10px;">
+                <label>Type: </label>
+            </div>
+            <div class="form-group">
+                <select id="type-select" class="form-control">
+                    <option value="numberOfContracts">Number of contracts</option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div id="map">
+
+    </div>
+
+    <div class="row">
+        <div id="line-chart-container" style="min-width: 310px; height: 400px; max-width: 1200px;"></div>
+    </div>
+
+    <div id="chart-container" style="min-width: 310px; height: 400px; max-width: 600px;"></div>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="activities-chart-container" style="min-width: 310px; height: 400px; max-width: 600px;"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="categories-chart-container" style="min-width: 310px; height: 400px; max-width: 600px;"></div>
+        </div>
+    </div>
+
+    <iframe class='highcharts-iframe' src='//cloud.highcharts.com/embed/opyfubu'
+            style='border: 0; width: 100%; height: 500px'></iframe>
+</div>
+
+</body>
+</html>
+
+
+<script type="text/javascript">
+
+
+</script>
+
